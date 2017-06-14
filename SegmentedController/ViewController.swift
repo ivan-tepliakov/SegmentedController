@@ -9,17 +9,34 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    
+    @IBOutlet weak var contentView: UIView!
+    
+    @IBOutlet var views: [UIView]!
+    
+    @IBAction func selectedSegmentChanged() {
+        let selectedIndex = segmentedControl.selectedSegmentIndex
+        let selectedView = views[selectedIndex]
+        selectedView.frame = view.bounds
+        
+        UIView.transition(
+            from: contentView,
+            to: selectedView,
+            duration: 0.25,
+            options: .transitionCrossDissolve
+        ) { (finished) in
+            if finished {
+                self.contentView = selectedView
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        selectedSegmentChanged()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
 
 }
-
